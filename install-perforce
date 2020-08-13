@@ -1,16 +1,18 @@
 #!/bin/sh
 
+wget ftp://ftp.perforce.com/perforce/r20.1/bin.linux26x86_64/p4
 wget ftp://ftp.perforce.com/perforce/r20.1/bin.linux26x86_64/p4d
+chmod +x p4
 chmod +x p4d
+sudo mv p4 /usr/local/bin
 sudo mv p4d /usr/local/bin
 sudo adduser perforce
 sudo mkdir /perforce_depot
 sudo chown perforce /perforce_depot
 sudo mkdir /var/log/perforce
 sudo chown perforce /var/log/perforce
-sudo apt-get install daemon
-cd /etc/init.d
-wget https://raw.githubusercontent.com/MajesticMack/linux-perforce-installer/master/p4dservice
-chmod +x /etc/init.d/p4dservice
-sudo update-rc.d p4dservice defaults
+wget https://raw.githubusercontent.com/MajesticMack/linux-perforce-installer/master/perforce.service
+sudo mv perforce.service /etc/systemd/system
+sudo chmod 644 /etc/systemd/system/perforce.service
+sudo systemctl enable perforce
 sudo reboot

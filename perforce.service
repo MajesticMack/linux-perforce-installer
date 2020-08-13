@@ -1,0 +1,18 @@
+[Unit]
+Description=Perforce service
+After=network.service
+
+[Service]
+Type=simple
+Environment=P4JOURNAL=/var/log/perforce/journal
+Environment=P4LOG=/var/log/perforce/p4err
+Environment=P4ROOT=/perforce_depot
+Environment=P4PORT=1666
+User=perforce
+Group=perforce
+ExecStart=p4d
+ExecStop=p4 admin stop
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
